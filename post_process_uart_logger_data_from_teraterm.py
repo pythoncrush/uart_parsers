@@ -95,10 +95,10 @@ def compose_pandas_dataframes_and_plots():
 		plt.gcf().autofmt_xdate()
 		plt.gca().set_title(name)
 		#can change interval to 5,10 any number if there is too much data to plot
-		plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=1))
+		plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=5))
 		name = name + '.png'
-		#plt.show()
-		plt.savefig(name)
+		plt.show()
+		#plt.savefig(name)
 
 
 if __name__ == "__main__":
