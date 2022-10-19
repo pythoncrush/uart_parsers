@@ -66,7 +66,7 @@ def read_logs_and_create_csv_files():
 						print(date_parsed + ',' +time_stamp_parsed + ',' +batt_percentage_parsed, file=outfile2)
 						print(date_parsed + ',' +time_stamp_parsed + ',' +voltage_parsed, file=outfile3)
 
-					if (regex_matched := re.search(r'\[(\d{4}-\d+-\d+)\s+(\d+:\d+:\d+\.\d+)]\s+\.(.+)MCU:\s(BT|VPR)\s(.+)', line)):
+					if (regex_matched := re.search(r'\[(\d{4}-\d+-\d+)\s+(\d+:\d+:\d+\.\d+)]\s+\.(.+)MCU:\s(BT|VPR|Abs)\s(.+)', line)):
 						date_parsed = regex_matched.group(1)
 						time_stamp_parsed = regex_matched.group(2)
 						system_label = regex_matched.group(4)
