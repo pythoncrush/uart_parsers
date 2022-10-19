@@ -46,9 +46,10 @@ def read_logs_and_create_csv_files():
 		outfile_name1 = name + '_voice_prompts_' + ts + '.csv'
 		outfile_name2 = name + '_battery_percentage_' + ts + '.csv'
 		outfile_name3 = name + '_voltage_' + ts + '.csv'
+		outfile_name4 = name + '_MCU_info_' + ts + '.csv'
 		
 		with open(name, 'r') as infile:
-			with open(outfile_name1, 'w') as outfile1, open(outfile_name2, 'w') as outfile2, open(outfile_name3, 'w') as outfile3:
+			with open(outfile_name1, 'w') as outfile1, open(outfile_name2, 'w') as outfile2, open(outfile_name3, 'w') as outfile3, open(outfile_name4, 'w') as outfile4:
 				for line in infile:
 					if (regex_matched := re.search(r'\[(\d{4}-\d+-\d+)\s+(\d+:\d+:\d+\.\d+)]\s+\[(.+)]\s+file_index:(\d+)', line)):
 						date_parsed = regex_matched.group(1)
@@ -64,6 +65,13 @@ def read_logs_and_create_csv_files():
 						voltage_parsed = regex_matched.group(5)
 						print(date_parsed + ',' +time_stamp_parsed + ',' +batt_percentage_parsed, file=outfile2)
 						print(date_parsed + ',' +time_stamp_parsed + ',' +voltage_parsed, file=outfile3)
+
+					if (regex_matched := re.search(r'\[(\d{4}-\d+-\d+)\s+(\d+:\d+:\d+\.\d+)]\s+\.(.+)MCU:\s(BT|VPR)\s(.+)', line)):
+						date_parsed = regex_matched.group(1)
+						time_stamp_parsed = regex_matched.group(2)
+						system_label = regex_matched.group(4)
+						system_text = regex_matched.group(5)
+						print(date_parsed + ',' +time_stamp_parsed + ',' +str(system_label) + ',' + str(system_text), file=outfile4)
 
 def compose_pandas_dataframes_and_plots():
 	for name in glob.glob('*.csv'):
